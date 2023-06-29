@@ -375,7 +375,7 @@ int RedisConn::getKeyType(const char *key, int keyLen, char *valueType,
     REDIS_NORMAL_JUDGE(reply);
 
     int len = static_cast<int>(reply->len);
-    if (reply->len + 1 > valueLen)
+    if (reply->len + 1 > static_cast<unsigned long>(valueLen))
         len = ErrorCode::ERedis::SpaceNotEnough;
     else
         memcpy(valueType, reply->str, reply->len + 1);
@@ -771,7 +771,7 @@ int RedisConn::rpopList(const char *key, int keyLen, char *value,
         command("RPOP %b", key, static_cast<size_t>(keyLen)));
     REDIS_NORMAL_JUDGE(reply);
 
-    int len = (int)reply->len;
+    int len = static_cast<int>(reply->len);
     if (len > valueLen)  // 空间不够
     {
         len = ErrorCode::ERedis::SpaceNotEnough;
@@ -788,7 +788,7 @@ int RedisConn::rpopList(const std::string &key, std::string &value) {
         command("RPOP %b", key.c_str(), key.size()));
     REDIS_NORMAL_JUDGE(reply);
 
-    int len = (int)reply->len;
+    int len = static_cast<int>(reply->len);
     value = std::string(reply->str, reply->len);
     freeReplyObject(reply);
 
@@ -802,7 +802,7 @@ int RedisConn::indexList(const char *key, int keyLen, int index, char *value,
         command("LINDEX %b %d", key, static_cast<size_t>(keyLen), index));
     REDIS_NORMAL_JUDGE(reply);
 
-    int len = (int)reply->len;
+    int len = static_cast<int>(reply->len);
     if (len > valueLen)  // 空间不够
     {
         len = ErrorCode::ERedis::SpaceNotEnough;
@@ -820,7 +820,7 @@ int RedisConn::indexList(const std::string &key, int index,
         command("LINDEX %b %d", key.c_str(), key.size(), index));
     REDIS_NORMAL_JUDGE(reply);
 
-    int len = (int)reply->len;
+    int len = static_cast<int>(reply->len);
     value = std::string(reply->str, reply->len);
     freeReplyObject(reply);
 
