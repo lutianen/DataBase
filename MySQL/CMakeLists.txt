@@ -13,12 +13,12 @@ add_library(Lute_MySQL STATIC ${srcs})
 target_include_directories(Lute_MySQL PUBLIC include)
 
 # 依赖
-target_link_libraries(Lute_MySQL PUBLIC mysqlclient Lute_Base)
+target_link_libraries(Lute_MySQL PRIVATE mysqlclient Lute_Base)
 
-if (NOT BUILD_TEST)
-    message("Build LuxMySQL tests.")
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    message("Build MySQL tests.")
     add_subdirectory(test)
 else()
-    message("Don't Build LuxMySQL tests.")
+    message("Don't Build MySQL tests.")
 endif()
 
