@@ -1,3 +1,6 @@
+find_package(hiredis REQUIRED)
+message(STATUS "hiredis found~")
+
 file(GLOB_RECURSE srcs CONFIGURE_DEPENDS src/*.cc include/*.h)
 add_library(Lute_Redis STATIC ${srcs})
 target_include_directories(Lute_Redis PUBLIC include)

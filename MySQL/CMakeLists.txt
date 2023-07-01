@@ -1,3 +1,6 @@
+find_package(PkgConfig)
+pkg_check_modules(MySQL REQUIRED mysqlclient>=5.7)
+
 # GLOB_RECURSE 允许 * 匹配嵌套的目录
 # GLOB 只允许查找一级目录
 # CONFIGURE_DEPENDS，每次运行 cmake --build build 时，自动检测目录是否更新；
