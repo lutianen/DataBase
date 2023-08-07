@@ -1,5 +1,13 @@
-find_package(hiredis REQUIRED)
-message(STATUS "hiredis found~")
+find_package(hiredis)
+
+if(hiredis_FOUND)
+    message(STATUS "hiredis found~")
+else()
+    message(STATUS "hiredis NOT found")
+    message(STATUS "    SET hiredis_DIR to /usr/local/lib/hiredis")
+    SET(hiredis_DIR /usr/local/lib/hiredis)
+endif()
+
 
 file(GLOB_RECURSE srcs CONFIGURE_DEPENDS src/*.cc include/*.h)
 add_library(Lute_Redis STATIC ${srcs})
